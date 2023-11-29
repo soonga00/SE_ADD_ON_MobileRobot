@@ -59,7 +59,8 @@ public class Main {
         addOn.printMap();
 //        path = addOn.planPath(sim, realRobot);
 //        print2D("PATH", path);
-        addOn.planPath(sim, realRobot);
+        addOn.planPath();
+
         addOn.testMove(sim,realRobot,realMap);
     }
 }

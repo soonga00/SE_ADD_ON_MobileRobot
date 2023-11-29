@@ -5,7 +5,7 @@ import java.util.Random;
 public class Robot {
     private int x;
     private int y;
-    public static final int[][] DIRECTIONS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    public static final int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     private int direction;
     private char symbol;
 
@@ -17,15 +17,15 @@ public class Robot {
 
     public void moveForward(Map realMap) {
         Random random = new Random();
-        double probability = random.nextDouble();
+        double probability = 1.0;//random.nextDouble();
         int distance = (probability <= 0.1) ? 2 : 1;
         this.x += DIRECTIONS[direction][0] * distance;
         this.y += DIRECTIONS[direction][1] * distance;
 
         if(this.y < 0) this.y = 0;
-        if(this.y > realMap.getMap().length) this.y = realMap.getMap().length;
+        if(this.y > realMap.getMap().length - 1) this.y = realMap.getMap().length;
         if(this.x < 0) this.x = 0;
-        if(this.x > realMap.getMap()[0].length) this.x = realMap.getMap()[0].length;
+        if(this.x > realMap.getMap()[0].length - 1) this.x = realMap.getMap()[0].length;
     }
 
     public void rotate() {

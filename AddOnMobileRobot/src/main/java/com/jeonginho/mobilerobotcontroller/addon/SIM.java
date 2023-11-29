@@ -10,11 +10,11 @@ public class SIM {
 
     public boolean isHazard(Robot robot, Map realMap){
         int[] robotPos = robot.getPos();
+
         int xToDetect = robotPos[0] + Robot.DIRECTIONS[robotPos[2]][0];
         int yToDetect = robotPos[1] + Robot.DIRECTIONS[robotPos[2]][1];
-
-        char result = (char) realMap.getSpotType(xToDetect,yToDetect);
-        return result=='H';
+        char result = realMap.getSpotType(xToDetect,yToDetect);
+        return result == 'H';
     }
     public boolean[] isColorblob(Robot robot, Map realMap){
         boolean[] sensor = {false, false, false, false};
