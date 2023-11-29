@@ -36,18 +36,6 @@ public class AddOn {
             System.out.println();
         }
     }
-    public void printTest(int x, int y) {
-        for (int i = this.addOnMap.length - 1; i >= 0 ; i--) {
-            for (int j = 0; j < this.addOnMap[i].length; j++) {
-                if(x==j&&y==i)
-                    System.out.print("R" + " ");
-                else
-                    System.out.print(this.addOnMap[i][j] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println("============================");
-    }
     public void dfs(int x, int y) {
         // Direction arrays for moving up, down, left, right
         int[] dx = {1, 0, -1, 0};
@@ -114,7 +102,6 @@ public class AddOn {
         return targetDirection - direction;
     }
     public void orderMovement(SIM sim, Robot robot, Map realMap) {
-        if(!path.isEmpty()) {
             int curX = addOnRobot.getPos()[0];
             int curY = addOnRobot.getPos()[1];
             int curDirection = addOnRobot.getPos()[2];
@@ -123,6 +110,7 @@ public class AddOn {
                 this.planPath(sim, robot);
                 rePath = false;
             }
+        if(!path.isEmpty()) {
             printPath();
             int nextX = this.path.get(0)[0];
             int nextY = this.path.get(0)[1];
