@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 
 public class VoiceInput {
+
     static public void main ( String[] args ) {
 
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Recognition";

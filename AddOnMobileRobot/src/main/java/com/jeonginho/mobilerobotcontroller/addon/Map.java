@@ -1,8 +1,8 @@
 package com.jeonginho.mobilerobotcontroller.addon;
 
 public class Map {
-    private int xSize;
-    private int ySize;
+    private final int xSize;
+    private final int ySize;
     private final char[][] map;
     /*
     Spot Type
@@ -13,20 +13,20 @@ public class Map {
 
      */
     public Map(int xSize, int ySize) {
-        this.xSize = xSize;
-        this.ySize = ySize;
-        this.map = new char[xSize][ySize];
+        this.xSize = xSize + 1;
+        this.ySize = ySize + 1;
+        this.map = new char[this.ySize][this.xSize];
 
-        for(int i = xSize - 1; i >= 0; i--)
-            for(int j = ySize - 1; j >= 0; j--)
-                map[i][j] = '□';
+        for(int i = xSize; i >= 0; i--)
+            for(int j = ySize; j >= 0; j--)
+                map[j][i] = '□';
     }
 
-    public void UpdateMap(int x, int y, char spotType){
-        this.map[x][y] = spotType;
+    public void updateMap(int x, int y, char spotType){
+        this.map[y][x] = spotType;
     }
     public int getSpotType(int x, int y){
-        return this.map[x][y];
+        return this.map[y][x];
     }
 
     public char[][] getMap(){
@@ -37,7 +37,7 @@ public class Map {
         System.out.println();
         for(int y = ySize - 1; y >= 0; y--){
             for(int x = 0; x < xSize; x++){
-                System.out.print(map[x][y] + " ");
+                System.out.print(map[y][x] + " ");
             }
             System.out.println();
         }
