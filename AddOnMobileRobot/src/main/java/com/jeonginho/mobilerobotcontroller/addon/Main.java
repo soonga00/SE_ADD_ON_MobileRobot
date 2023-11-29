@@ -98,10 +98,14 @@ public class Main {
         int[][] hazard;
         int[][] path;
 
-        map = input("Map");
-        start = input("Start");
-        spot = input2D("Spot");
-        hazard = input2D("Hazard");
+//        map = input("Map");
+//        start = input("Start");
+//        spot = input2D("Spot");
+//        hazard = input2D("Hazard");
+        map = new int[] {3,4};
+        start = new int[] {0,0};
+        spot = new int[][] {{3,2}, {1,4}};
+        hazard = new int[][] {{1,2}, {2,1}, {2,0}, {3,4}, {1, 0}};
 
         print("Map", map);
         print("Start", start);
