@@ -12,8 +12,8 @@ public class SIM {
         int[] robotPos = robot.getPos();
         int xToDetect = robotPos[0] + Robot.DIRECTIONS[robotPos[2]][0];
         int yToDetect = robotPos[1] + Robot.DIRECTIONS[robotPos[2]][1];
-
-        char result = (char) realMap.getSpotType(xToDetect,yToDetect);
+        System.out.println("==Hazard Detecting... : "+xToDetect+", "+yToDetect);
+        char result = realMap.getSpotType(xToDetect,yToDetect);
         return result=='H';
     }
     public boolean[] isColorblob(Robot robot, Map realMap){
@@ -22,8 +22,13 @@ public class SIM {
             int[] robotPos = robot.getPos();
             int xToDetect = robotPos[0] + Robot.DIRECTIONS[i][0];
             int yToDetect = robotPos[1] + Robot.DIRECTIONS[i][1];
-            if(realMap.getSpotType(xToDetect,yToDetect)=='C')
+
+            if(xToDetect < 0 | yToDetect < 0 | xToDetect > realMap.getMap()[0].length-1 | yToDetect > realMap.getMap().length-1) break;
+
+            if(realMap.getSpotType(xToDetect,yToDetect)=='C'){
+                System.out.println("Color blob detected! ["+xToDetect+", "+yToDetect+"] "+i);
                 sensor[i]=true;
+            }
         }
         return sensor;
     }

@@ -3,7 +3,7 @@ package com.jeonginho.mobilerobotcontroller.addon;
 public class Map {
     private final int xSize;
     private final int ySize;
-    private final char[][] map;
+    private char[][] map;
 
     public Map(int xSize, int ySize, int[][] predefined, int[][] hazard) {
         this.xSize = xSize + 1;
@@ -22,7 +22,7 @@ public class Map {
     public void updateMap(int x, int y, char spotType){
         this.map[y][x] = spotType;
     }
-    public int getSpotType(int x, int y){
+    public char getSpotType(int x, int y){
         return this.map[y][x];
     }
 

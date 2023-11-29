@@ -39,9 +39,9 @@ public class Main {
 //        start = input("Start");
 //        predefined = input2D("Spot");
 //        hazard = input2D("Hazard");
-        sizeOfMap = new int[] {3,4};
+        sizeOfMap = new int[] {5,7};
         start = new int[] {0,0};
-        predefined = new int[][] {{3,2}, {1,4}};
+        predefined = new int[][] {{4,5}, {3,7}, {4,0}};
         hazard = new int[][] {{1,2}, {2,1}, {2,0}, {3,4}, {1, 0}};
 
         print("Map", sizeOfMap);
@@ -57,9 +57,16 @@ public class Main {
 
         AddOn addOn = new AddOn(realMap.getMap(), start, predefined);
         addOn.printMap();
-//        path = addOn.planPath(sim, realRobot);
-//        print2D("PATH", path);
+
+        realMap.updateMap(5,2,'H');
+
+        realMap.updateMap(0,4,'C');
+
+        realMap.updateMap(2,6,'C');
+        realMap.updateMap(4,3,'C');
         addOn.planPath(sim, realRobot);
         addOn.testMove(sim,realRobot,realMap);
+
+        System.out.println("===============================\n||    Operation Finished !   ||\n===============================");
     }
 }
