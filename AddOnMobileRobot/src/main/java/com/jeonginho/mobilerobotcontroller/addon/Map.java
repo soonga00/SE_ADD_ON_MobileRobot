@@ -4,22 +4,19 @@ public class Map {
     private final int xSize;
     private final int ySize;
     private final char[][] map;
-    /*
-    Spot Type
-        0 : none
-        1 : Hazard
-        2 : Color Blob (중요 지점)
-        3 : Predefined Spot (탐색 지점)
 
-     */
-    public Map(int xSize, int ySize) {
+    public Map(int xSize, int ySize, int[][] predefined, int[][] hazard) {
         this.xSize = xSize + 1;
         this.ySize = ySize + 1;
         this.map = new char[this.ySize][this.xSize];
 
         for(int i = xSize; i >= 0; i--)
             for(int j = ySize; j >= 0; j--)
-                map[j][i] = '□';
+                this.updateMap(i,j,'.');
+        for(int i = 0; i < predefined.length; i++)
+            this.updateMap(predefined[i][0],predefined[i][1], 'P');
+        for(int i = 0; i < hazard.length; i++)
+            this.updateMap(hazard[i][0],hazard[i][1], 'H');
     }
 
     public void updateMap(int x, int y, char spotType){
@@ -33,14 +30,4 @@ public class Map {
         return this.map;
     }
 
-    public void printMap(){
-        System.out.println();
-        for(int y = ySize - 1; y >= 0; y--){
-            for(int x = 0; x < xSize; x++){
-                System.out.print(map[y][x] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println("=========== map is printed ===========");
-    }
 }

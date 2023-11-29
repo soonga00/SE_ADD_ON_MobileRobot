@@ -17,7 +17,7 @@ public class Robot {
 
     public void moveForward(Map realMap) {
         Random random = new Random();
-        double probability = random.nextDouble(); // 0.0에서 1.0 사이의 난수 생성
+        double probability = random.nextDouble();
         int distance = (probability <= 0.1) ? 2 : 1;
         this.x += DIRECTIONS[direction][0] * distance;
         this.y += DIRECTIONS[direction][1] * distance;
@@ -32,16 +32,20 @@ public class Robot {
         direction = (direction + 1) % 4;
 
     }
+    public void setPos(int x, int y, int direction){
+        this.x = x;
+        this.y = y;
+        this.direction = direction;
+    }
     public int[] getPos(){
         return new int[]{this.x, this.y, this.direction};
     }
-    //▶◀▼
     public void printWholeMap(Map realMap){
         char[][] map = realMap.getMap();
         for(int y = map[0].length-1; y >= 0 ; y--){
             for(int x = 0; x < map.length; x++){
                 if(x == this.x && y == this.y)
-                    System.out.print("▲ ");
+                    System.out.print("R ");
                 else
                     System.out.print(map[x][y]+" ");
             }

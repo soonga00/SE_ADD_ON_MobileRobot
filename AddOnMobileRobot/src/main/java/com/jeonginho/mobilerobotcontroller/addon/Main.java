@@ -14,69 +14,6 @@ public class Main {
             System.out.println();
         }
     }
-    public static int[] input(String type) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print(type + " : ");
-
-        // Read the input line
-        String inputLine = scanner.nextLine();
-        inputLine = inputLine.replaceAll("[()]", "");
-
-        // Split the input into an array of strings based on commas
-        String[] values = inputLine.split(",");
-
-        // Create a one-dimensional array
-        int[] array = Arrays.stream(values)
-                .mapToInt(Integer::parseInt)
-                .toArray();
-
-        return array;
-    }
-    public static int[][] input2D(String type) {
-        Scanner scanner = new Scanner(System.in);
-
-        // Prompt the user to enter a two-dimensional array in the specified format
-        System.out.print(type + " : ");
-
-        // Read the input line
-        String inputLine = scanner.nextLine();
-
-        // Remove unnecessary characters from the input
-        inputLine = inputLine.replaceAll("[()]", "");
-
-        // Split the input line into an array of strings based on spaces
-        String[] pairs = inputLine.split("\\s+");
-
-        // Create a list to store pairs
-        ArrayList<int[]> pairList = new ArrayList<>();
-
-        // Parse each pair and add it to the list
-        for (String pair : pairs) {
-            String[] values = pair.split(",");
-            if (values.length == 2) {
-                try {
-                    int x = Integer.parseInt(values[0]);
-                    int y = Integer.parseInt(values[1]);
-                    pairList.add(new int[]{x, y});
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input. Please enter valid integer pairs.");
-                    return null;
-                }
-            } else {
-                System.out.println("Invalid input. Please enter pairs in the format (x, y).");
-                return null;
-            }
-        }
-
-        // Convert the list to a two-dimensional array
-        int[][] twoDArray = new int[pairList.size()][2];
-        for (int i = 0; i < pairList.size(); i++) {
-            twoDArray[i] = pairList.get(i);
-        }
-
-        return twoDArray;
-    }
-
     public static void print(String type, int[] array) {
         System.out.print(type + "data : ");
         System.out.println("[" + array[0] + ", " + array[1] + "] ");
@@ -113,20 +50,16 @@ public class Main {
         print2D("Hazard", hazard);
 
 
-        AddOn addOn = new AddOn(sizeOfMap, start, predefined, hazard);
-        addOn.printMap();
 
         SIM sim = new SIM();
         Robot realRobot = new Robot(start[0], start[1]);
-        Map realMap = new Map(sizeOfMap[0], sizeOfMap[1]);
+        Map realMap = new Map(sizeOfMap[0], sizeOfMap[1], predefined, hazard);
 
-        for(int i = 0; i < predefined.length; i++)
-            realMap.updateMap(predefined[i][0],predefined[i][1], 'P');
-        for(int i = 0; i < hazard.length; i++)
-            realMap.updateMap(hazard[i][0],hazard[i][1], 'H');
-        realMap.printMap();
+        AddOn addOn = new AddOn(realMap.getMap(), start, predefined);
+        addOn.printMap();
 //        path = addOn.planPath(sim, realRobot);
 //        print2D("PATH", path);
-
+        addOn.planPath(sim, realRobot);
+        addOn.testMove(sim,realRobot,realMap);
     }
 }
