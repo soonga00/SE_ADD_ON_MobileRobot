@@ -79,7 +79,6 @@ public class AddOn {
         for (int i = 0; i < path.size(); i++) {
             result[i] = path.get(i);
         }
-        print2D("path ", result);
     }
 
     private int calTurns(int direction, int curX, int curY, int nextX, int nextY){
@@ -127,15 +126,11 @@ public class AddOn {
     public void testMove(SIM sim, Robot robot, Map realMap){
         int i = 1;
         while(!this.path.isEmpty()){
-            System.out.println(i + " move ------------------");
             orderMovement(sim,robot,realMap);
-            this.printMap();
             int[][] result = new int[path.size()][2];
             for (int j = 0; j < path.size(); j++) {
                 result[j] = path.get(j);
             }
-            print2D("path ", result);
-            System.out.println("\n\n");
             i++;
         }
     }
