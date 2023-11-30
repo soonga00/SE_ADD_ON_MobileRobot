@@ -56,7 +56,7 @@ public class RecordAudio {
     private void saveToFile(byte[] audioData) {
         try {
             // 파일로 저장
-            File outputFile = new File("/Users/josua/Desktop/sua/1_uos/0_cs/3-2/소공/records/recorded.wav");
+            File outputFile = new File("/Users/kkdh15/Desktop/dh/UOS/SE/records/recorded.wav");
             AudioFormat audioFormat = line.getFormat();
             AudioInputStream audioInputStream = new AudioInputStream(new ByteArrayInputStream(audioData), audioFormat, audioData.length);
             AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, outputFile);
