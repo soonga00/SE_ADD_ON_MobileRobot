@@ -6,8 +6,8 @@ public class AddOn {
     private char[][] addOnMap;
     private char[][] visitedMap;
     Robot addOnRobot;
-    private int spotNum;
-    private int spotsVisited = 0;
+    private int predsNum;
+    private int visitedPreds = 0;
     private ArrayList<int[]> path = new ArrayList<>();
     private boolean rePath = false;
 
@@ -22,7 +22,7 @@ public class AddOn {
             }
         }
 
-        this.spotNum = spot.length;
+        this.predsNum = spot.length;
         this.addOnRobot = new Robot(start[0], start[1]);
     }
     public void printMap() {
@@ -44,14 +44,14 @@ public class AddOn {
         for (int i = 0; i < 4; i++) {
             int newX = x + dx[i];
             int newY = y + dy[i];
-            if (spotsVisited == spotNum)
+            if (visitedPreds == predsNum)
                 return;
             // Check if the new position is within the addOnMap bounds
             if (newX >= 0 && newX < addOnMap[0].length && newY >= 0 && newY < addOnMap.length && addOnMap[newY][newX] != 'H' && visitedMap[newY][newX] != 'V') {
                 // Mark the new position as visited
                 if (addOnMap[newY][newX] == 'P') {
-                    spotsVisited++;
-                    if (spotsVisited == spotNum) {
+                    visitedPreds++;
+                    if (visitedPreds == predsNum) {
                         path.add(new int[]{newX, newY});
                         return;
                     }
@@ -60,26 +60,26 @@ public class AddOn {
                 path.add(new int[]{newX, newY});
                 //this.printTest(newX, newY);
                 dfs(newX, newY);
-                if (spotsVisited == spotNum)
+                if (visitedPreds == predsNum)
                     break;
             }
         }
-        if (spotsVisited == spotNum){
+        if (visitedPreds == predsNum){
             return;
         }
         if (addOnMap[path.get(path.size() - 1)[1]][path.get(path.size() - 1)[0]] == 'P')
-                spotsVisited--;
+                visitedPreds--;
         visitedMap[path.get(path.size() - 1)[1]][path.get(path.size() - 1)[0]] = '.';
         path.remove(path.size() - 1);
     }
 
     public void planPath(SIM sim, Robot robot) {
-        this.spotNum = 0;
-        this.spotsVisited = 0;
+        this.predsNum = 0;
+        this.visitedPreds = 0;
         this.path = new ArrayList<>();
         for(int i = 0; i < addOnMap.length; i++){
             for(int j = 0; j < addOnMap[0].length; j++){
-                if(addOnMap[i][j]=='P') spotNum++;
+                if(addOnMap[i][j]=='P') predsNum++;
             }
         }
         // Copy the addOnMap to avoid modifying the original addOnMap
@@ -117,7 +117,7 @@ public class AddOn {
 
             for (int i = 0; i < calTurns(curDirection, curX, curY, nextX, nextY); i++)
                 sim.rotateRobot(robot);
-            System.out.println("Current Pos : " + curX + ", " + curY + "  direction : " + curDirection + "   remained P spot : " + spotsVisited + " /" + spotNum);
+            System.out.println("Current Pos : " + curX + ", " + curY + "  direction : " + curDirection + "   remained P spot : " + visitedPreds + " /" + predsNum);
             System.out.println("NExt Movement : " + nextX + ", " + nextY);
 
             for (int i = 0; i < 4; i++) {
@@ -146,7 +146,7 @@ public class AddOn {
 
     public void testMove(SIM sim, Robot robot, Map realMap){
         int cnt = 0;
-        while(!this.path.isEmpty()&(spotNum!=0)&(cnt++<500)) {
+        while(!this.path.isEmpty()&(predsNum!=0)&(cnt++<500)) {
             System.out.println("#"+cnt+":");
             orderMovement(sim, robot, realMap);
             this.printMap();

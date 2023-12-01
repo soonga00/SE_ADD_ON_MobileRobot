@@ -43,6 +43,7 @@ public class Main {
         start = new int[] {0,0};
         predefined = new int[][] {{4,5}, {3,7}, {4,0}};
         hazard = new int[][] {{1,2}, {2,1}, {2,0}, {3,4}, {1, 0}};
+        int[][] colorBlob = new int[][]{{0, 4}, {2, 6}, {2, 3}};
 
         print("Map", sizeOfMap);
         print("Start", start);
@@ -53,16 +54,13 @@ public class Main {
 
         SIM sim = new SIM();
         Robot realRobot = new Robot(start[0], start[1]);
-        Map realMap = new Map(sizeOfMap[0], sizeOfMap[1], predefined, hazard);
+        Map realMap = new Map(sizeOfMap[0], sizeOfMap[1], predefined, hazard, colorBlob);
 
         AddOn addOn = new AddOn(realMap.getMap(), start, predefined);
         addOn.printMap();
 
         realMap.updateMap(5,2,'H');
 
-        realMap.updateMap(0,4,'C');
-
-        realMap.updateMap(2,6,'C');
         realMap.updateMap(4,3,'C');
         addOn.planPath(sim, realRobot);
         addOn.testMove(sim,realRobot,realMap);
