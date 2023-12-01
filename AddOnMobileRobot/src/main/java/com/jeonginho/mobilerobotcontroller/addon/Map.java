@@ -31,5 +31,22 @@ public class Map {
     public char[][] getMap(){
         return this.map;
     }
-
+    public char[][] getInitialMap() {
+        char[][] mapForAddOn = new char[ySize][xSize];
+        for(int i = xSize-1; i >= 0; i--)
+            for(int j = ySize-1; j >= 0; j--)
+                if(this.map[j][i] != 'P')
+                    mapForAddOn[j][i] = '.';
+                else
+                    mapForAddOn[j][i] = 'P';
+        return mapForAddOn;
+    }
+    public void printMap() {
+        for (int i = this.map.length - 1; i >= 0 ; i--) {
+            for (int j = 0; j < this.map[i].length; j++) {
+                System.out.print(this.map[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
 }
