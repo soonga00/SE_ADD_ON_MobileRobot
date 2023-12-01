@@ -11,6 +11,7 @@ public class AddOn {
     private ArrayList<int[]> path = new ArrayList<>();
     private boolean rePath = false;
     private int dfsCnt = 0;
+    private int removeCnt = 0;
 
     public AddOn(char[][] initialMap, int[] start, int[][] spot) {
         int rows = initialMap.length;
@@ -67,14 +68,11 @@ public class AddOn {
                     needChange = true;
                 }
             }
-
         }
-        for(i = path.size() - 1; i > minPastDfsCnt; i--){
-            visitedMap[this.path.get(i)[1]][this.path.get(i)[0]] = -1;
-            this.path.remove(i);
+        if(needChange){
+            removeCnt = dfsCnt - minPastDfsCnt-1;
+            System.out.println("DFS Count : "+dfsCnt+", MinPastDfsCnt : "+minPastDfsCnt+", || removeCnt : "+removeCnt);
         }
-        if(needChange)
-            dfsCnt = minPastDfsCnt+1;
 
     }
     private void dfs(int x, int y, int curDirection) {
@@ -83,36 +81,42 @@ public class AddOn {
         int[] dy = {0, 1, 0, -1};
 
         for (int i = 0; i < 4; i++) {
+            if(removeCnt > 0){
+                removeCnt--;
+                break;
+            }
             int newX = x + dx[(i+curDirection)%4];
             int newY = y + dy[(i+curDirection)%4];
             if (visitedPreds == 1)
                 return;
             // Check if the new position is within the addOnMap bounds
             if (newX >= 0 && newX < addOnMap[0].length && newY >= 0 && newY < addOnMap.length && addOnMap[newY][newX] != 'H' && visitedMap[newY][newX] == -1) {
-                // Mark the new position as visited
-                if (addOnMap[newY][newX] == 'P') {
-                    isAdjSpotVisited(newX, newY);
-                    visitedPreds++;
-                    visitedMap[newY][newX] = dfsCnt;
-                    path.add(new int[]{newX, newY});
-                    return;
-                }
-                if(!path.isEmpty())
-                    isAdjSpotVisited(newX, newY);
+
 
                 visitedMap[newY][newX] = dfsCnt;
-                showPaths();
                 path.add(new int[]{newX, newY});
+                isAdjSpotVisited(newX, newY);
+
+                showPaths();
+                if(removeCnt > 0){
+                    removeCnt--;
+                    break;
+                }
+                if (addOnMap[newY][newX] == 'P') {
+                    visitedPreds++;
+                    return;
+                }
                 dfsCnt++;
                 dfs(newX, newY, i);
+
             }
-        }
-        if (visitedPreds == 1){
-            return;
         }
         visitedMap[path.get(path.size() - 1)[1]][path.get(path.size() - 1)[0]] = -1;
         path.remove(path.size() - 1);
         dfsCnt--;
+        if (visitedPreds == 1){
+            return;
+        }
     }
 
     public void planPath(SIM sim, Robot robot) {
