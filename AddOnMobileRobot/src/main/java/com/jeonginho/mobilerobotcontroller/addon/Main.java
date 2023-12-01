@@ -65,6 +65,5 @@ public class Main {
         addOn.planPath(sim, realRobot);
         addOn.testMove(sim,realRobot,realMap);
 
-        System.out.println("===============================\n||    Operation Finished !   ||\n===============================");
     }
 }
