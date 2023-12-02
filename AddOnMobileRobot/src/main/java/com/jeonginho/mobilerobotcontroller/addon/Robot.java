@@ -7,7 +7,6 @@ public class Robot {
     private int y;
     public static final int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     private int direction;
-    private char symbol;
 
     public Robot(int initialX, int initialY) {
         this.x = initialX;
@@ -19,8 +18,9 @@ public class Robot {
         Random random = new Random();
         double probability = random.nextDouble();
         int distance = (probability <= 0.1) ? 2 : 1;
-        if(distance==2)
+        if(distance==2){
             System.out.println("=============================error occured!==========");
+        }
         this.x += DIRECTIONS[direction][0] * distance;
         this.y += DIRECTIONS[direction][1] * distance;
 
@@ -28,10 +28,16 @@ public class Robot {
         if(this.y > realMap.getMap().length-1) this.y = realMap.getMap().length-1;
         if(this.x < 0) this.x = 0;
         if(this.x > realMap.getMap()[0].length-1) this.x = realMap.getMap()[0].length-1;
+        if(distance == 2 & realMap.getSpotType(x,y)=='H'){
+            this.x += DIRECTIONS[(direction+2)%4][0];
+            this.y += DIRECTIONS[(direction+2)%4][1];
+        }
+
     }
 
     public void rotate() {
         direction = (direction + 1) % 4;
+        System.out.println("Robot direction"+direction);
 
     }
     public void setPos(int x, int y, int direction){
@@ -41,17 +47,5 @@ public class Robot {
     }
     public int[] getPos(){
         return new int[]{this.x, this.y, this.direction};
-    }
-    public void printWholeMap(Map realMap){
-        char[][] map = realMap.getMap();
-        for(int y = map[0].length-1; y >= 0 ; y--){
-            for(int x = 0; x < map.length; x++){
-                if(x == this.x && y == this.y)
-                    System.out.print("R ");
-                else
-                    System.out.print(map[x][y]+" ");
-            }
-            System.out.println();
-        }
     }
 }

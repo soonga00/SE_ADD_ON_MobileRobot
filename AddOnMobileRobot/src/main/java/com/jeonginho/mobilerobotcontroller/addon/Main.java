@@ -1,69 +1,100 @@
 package com.jeonginho.mobilerobotcontroller.addon;
 
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.*;
 
 public class Main {
-    public static void printMap(char[][] map) {
-        for (int i = map.length - 1; i >= 0 ; i--) {
-            for (int j = 0; j < map[i].length; j++) {
-                System.out.print(map[i][j] + " ");
+    private static int[] convertToCoordinatesArray(String input) {
+        input = input.replaceAll("[\\(\\)]", ""); // 괄호 제거
+        String[] parts = input.split("\\s+"); // 공백을 기준으로 분리
+
+        int[] coordinates = new int[parts.length];
+        try {
+            for (int i = 0; i < parts.length; i++) {
+                coordinates[i] = Integer.parseInt(parts[i]);
             }
-            System.out.println();
+            return coordinates;
+        } catch (NumberFormatException | NullPointerException e) {
+            // 숫자로 변환할 수 없거나 null인 경우, 유효하지 않은 입력으로 간주
+            return null;
         }
     }
-    public static void print(String type, int[] array) {
-        System.out.print(type + "data : ");
-        System.out.println("[" + array[0] + ", " + array[1] + "] ");
+    private static int[][] convertToCoordinates2DArray(String input) {
+        String[] coordinatePairs = input.split("\\)\\("); // 괄호 사이의 쌍을 분리
+        int[][] result = new int[coordinatePairs.length][];
 
-    }
+        for (int i = 0; i < coordinatePairs.length; i++) {
+            String pair = coordinatePairs[i].replaceAll("[()]", ""); // 괄호 제거
+            String[] coordinates = pair.split("\\s+"); // 공백을 기준으로 좌표 분리
 
-    public static void print2D(String type, int[][] twoDArray) {
-        System.out.print(type + "data : [ ");
-        for (int[] row : twoDArray) {
-            System.out.print("[" + row[0] + ", " + row[1] + "] ");
+            result[i] = new int[coordinates.length];
+            try {
+                for (int j = 0; j < coordinates.length; j++) {
+                    result[i][j] = Integer.parseInt(coordinates[j]);
+                }
+            } catch (NumberFormatException | NullPointerException e) {
+                // 숫자로 변환할 수 없거나 null인 경우, 유효하지 않은 입력으로 간주하고 해당 배열을 null로 설정
+                return null;
+            }
         }
-        System.out.println("]");
+
+        return result;
     }
+
 
     public static void main(String[] args) {
-        int[]   sizeOfMap;
-        int[]   start;
-        int[][] predefined;
-        int[][] hazard;
-        int[][] path;
+        initMap interfacE = new initMap();
+        JButton submitButton = interfacE.getSubmitBtn();
+        if (submitButton != null) {
+            // 가져온 버튼이 null이 아닌 경우, ActionListener 등록 또는 기타 동작 수행
+            submitButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    interfacE.setMapSizeText();
+                    interfacE.setStartSpotText();
+                    interfacE.setSpotInputText();
+                    interfacE.setColorInputText();
+                    interfacE.setHazardSpotText();
+                    String mapSizeText = interfacE.getMapSizeText();
+                    String startSpotText = interfacE.getStartSpotText();
+                    String spotInputText = interfacE.getSpotInputText();
+                    String colorInputText = interfacE.getColorInputText();
+                    String hazardInputText = interfacE.getHazardSpotText();
 
-//        map = input("Map");
-//        start = input("Start");
-//        predefined = input2D("Spot");
-//        hazard = input2D("Hazard");
-        sizeOfMap = new int[] {5,7};
-        start = new int[] {0,0};
-        predefined = new int[][] {{4,5}, {3,7}, {4,0}};
-        hazard = new int[][] {{1,2}, {2,1}, {2,0}, {3,4}, {1, 0}};
-        int[][] colorBlob = new int[][]{{0, 4}, {2, 6}, {2, 3}};
+                    mapSizeText = "(4 5)";
+                    startSpotText = "(1 2)";
+                    spotInputText = "((4 2)(1 5)(0 0)";
+                    colorInputText = "((0 2)(2 2)(4 4))";
+                    hazardInputText = "((1 0)(3 2))";
 
-        print("Map", sizeOfMap);
-        print("Start", start);
-        print2D("Spot", predefined);
-        print2D("Hazard", hazard);
+                    int[] sizeOfMap;
+                    int[] start;
+                    int[][] predefined;
+                    int[][] color;
+                    int[][] hazard;
 
+                    sizeOfMap = convertToCoordinatesArray(mapSizeText);
+                    start = convertToCoordinatesArray(startSpotText);
+                    predefined = convertToCoordinates2DArray(spotInputText);
+                    color = convertToCoordinates2DArray(colorInputText);
+                    hazard = convertToCoordinates2DArray(hazardInputText);
 
+                    SIM sim = new SIM();
+//                    Robot realRobot = new Robot(start[0], start[1]);
+                    assert sizeOfMap != null;
+                    Map realMap = new Map(sizeOfMap[0], sizeOfMap[1], predefined, hazard, color);
+                    AddOn addOn = new AddOn(realMap.getInitialMap(), start, predefined);
 
-        SIM sim = new SIM();
-        Robot realRobot = new Robot(start[0], start[1]);
-        Map realMap = new Map(sizeOfMap[0], sizeOfMap[1], predefined, hazard, colorBlob);
+                    SwingUtilities.invokeLater(() -> {
+//                        interfaceTest userInterface = new interfaceTest(sim, addOn.addOnRobot, realMap, addOn);
+                        interfaceTest userInterface = new interfaceTest();
+                        userInterface.start(sim, addOn.addOnRobot, realMap, addOn);
 
-        AddOn addOn = new AddOn(realMap.getMap(), start, predefined);
-        addOn.printMap();
-
-        realMap.updateMap(5,2,'H');
-
-        realMap.updateMap(4,3,'C');
-        addOn.planPath(sim, realRobot);
-        addOn.testMove(sim,realRobot,realMap);
-
+                    });
+                }
+            });
+        }
     }
+
 }

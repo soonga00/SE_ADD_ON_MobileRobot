@@ -1,5 +1,6 @@
 package com.jeonginho.mobilerobotcontroller.addon;
 
+import javax.swing.*;
 import javax.sound.sampled.*;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -7,7 +8,7 @@ import java.io.IOException;
 import java.io.ByteArrayInputStream;
 
 public class RecordAudio {
-    private AudioFormat format;
+    private final AudioFormat format;
     private TargetDataLine line;
 
     public RecordAudio(AudioFormat format) {
@@ -20,7 +21,7 @@ public class RecordAudio {
             line.open(format);
             line.start();
 
-            System.out.println("녹음을 시작합니다.");
+            JOptionPane.showMessageDialog(null, "녹음을 시작합니다.");
 
             // 녹음할 시간 (초)
             int recordingTime = 5;
@@ -36,7 +37,7 @@ public class RecordAudio {
             }
 
             // 녹음 중지
-            System.out.println("녹음을 중지합니다.");
+            JOptionPane.showMessageDialog(null, "녹음을 중지합니다.");
 
             // 자원 해제
             out.close();
@@ -46,7 +47,7 @@ public class RecordAudio {
             // 파일로 저장
             saveToFile(out.toByteArray());
 
-            System.out.println("녹음 파일이 저장되었습니다.");
+            JOptionPane.showMessageDialog(null, "녹음 파일이 저장되었습니다.");
 
         } catch (LineUnavailableException | IOException e) {
             e.printStackTrace();
@@ -56,7 +57,7 @@ public class RecordAudio {
     private void saveToFile(byte[] audioData) {
         try {
             // 파일로 저장
-            File outputFile = new File("/Users/josua/Desktop/sua/1_uos/0_cs/3-2/소공/records/recorded.wav");
+            File outputFile = new File("/Users/kkdh15/Desktop/dh/UOS/SE/records/recorded.wav");
             AudioFormat audioFormat = line.getFormat();
             AudioInputStream audioInputStream = new AudioInputStream(new ByteArrayInputStream(audioData), audioFormat, audioData.length);
             AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, outputFile);
