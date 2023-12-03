@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Parsing {
     private List<Integer> posSpot;
-    public static String[] inputStr(String input) {
+    private static String[] inputStr(String input) {
         // 공백을 기준으로 문자열 분리
         return input.split("[\\s.]");
         // 분리된 각 부분 출력

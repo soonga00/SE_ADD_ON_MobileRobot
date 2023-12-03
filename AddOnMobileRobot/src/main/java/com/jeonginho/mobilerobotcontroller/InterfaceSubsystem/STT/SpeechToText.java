@@ -19,8 +19,7 @@ public class SpeechToText {
     public String getRecognizedText() {
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Recognition";
         String accessKey = "82fe1248-bce2-4873-aa26-8d76f3545d69";    // 발급받은 API Key
-        String languageCode = "korean";     // 언어 코드
-                            //\src\main\java\com\jeonginho\mobilerobotcontroller\InterfaceSubsystem\STT
+        String languageCode = "korean";
         String audioFilePath = "records/recorded.wav";  // 녹음된 음성 파일 경로
         String audioContents = null;
         String recognizedText = null;

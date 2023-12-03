@@ -9,17 +9,18 @@ import java.util.ArrayList;
 
 public class AddOn {
     private final char[][] addOnMap;
-    private Robot addOnRobot;
+    private final Robot addOnRobot;
     private int predsNum;
     private ArrayList<int[]> path;
-    private int dfsCnt;
-    private boolean rePath = true;
-    private boolean posError = false;
-    private Path newPath;
+    private boolean rePath;
+    private boolean posError;
+    private final Path newPath;
     public AddOn(char[][] initialMap, int[] start, int[][] spot) {
         int rows = initialMap.length;
         int cols = initialMap[0].length;
         newPath = new Path();
+        rePath = true;
+        posError = false;
 
         this.addOnMap = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
@@ -34,12 +35,8 @@ public class AddOn {
         return this.path;
     }
     public void orderMovement(SIM sim, Robot realRobot, Map realMap){
-
-        System.out.println("AddOn Part STart!");
         MoveRobot moveRobot = new MoveRobot();
-        System.out.println("////////Repath : "+rePath);
         if (rePath) {
-            System.out.println("Repeat Calculate Path");
             this.path = newPath.planPath(addOnMap, addOnRobot);
             predsNum = newPath.getPredsNum();
             rePath = false;

@@ -18,18 +18,6 @@ public class showUI extends JFrame {
     private static final int LABEL_WIDTH = 100;
     private static final int LABEL_HEIGHT = 100;
     private JLabel[][] imageLabels;
-    private ImageIcon colorImage;
-    private ImageIcon hazardImage;
-    private ImageIcon uncolorImage;
-    private ImageIcon unhazardImage;
-    private ImageIcon predefinedImage;
-    private ImageIcon passedPredefinedImage;
-    private ImageIcon defaultImage;
-    private ImageIcon pathImage;
-    private ImageIcon rightImage;
-    private ImageIcon leftImage;
-    private ImageIcon upImage;
-    private ImageIcon downImage;
     private JPanel tablePanel;
     private JPanel buttonPanel;
     private Timer timer;
@@ -41,18 +29,6 @@ public class showUI extends JFrame {
         setTitle("ADD-ON");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        hazardImage = new ImageIcon("hazard.png");
-        colorImage = new ImageIcon("colorblob.png");
-        unhazardImage = new ImageIcon("unhazard.png");
-        uncolorImage = new ImageIcon("uncolorblob.png");
-        predefinedImage = new ImageIcon("predefined.png");
-        passedPredefinedImage = new ImageIcon("passedPredefined.png");
-        defaultImage = new ImageIcon("default.png");
-        pathImage = new ImageIcon("path.png");
-        rightImage = new ImageIcon("right.png");
-        leftImage = new ImageIcon("left.png");
-        upImage = new ImageIcon("up.png");
-        downImage = new ImageIcon("down.png");
 
         this.addSpot = new Parsing();
 
@@ -125,6 +101,20 @@ public class showUI extends JFrame {
     }
 
     private void addImageLabels(Map realMap, AddOn addOn, Robot robot) {
+
+        ImageIcon hazardImage = new ImageIcon("hazard.png");
+        ImageIcon colorImage = new ImageIcon("colorblob.png");
+        ImageIcon unhazardImage = new ImageIcon("unhazard.png");
+        ImageIcon uncolorImage = new ImageIcon("uncolorblob.png");
+        ImageIcon predefinedImage = new ImageIcon("predefined.png");
+        ImageIcon passedPredefinedImage = new ImageIcon("passedPredefined.png");
+        ImageIcon defaultImage = new ImageIcon("default.png");
+        ImageIcon pathImage = new ImageIcon("path.png");
+        ImageIcon rightImage = new ImageIcon("right.png");
+        ImageIcon leftImage = new ImageIcon("left.png");
+        ImageIcon upImage = new ImageIcon("up.png");
+        ImageIcon downImage = new ImageIcon("down.png");
+
         int[] robotInfo = robot.getPos();
         int robotPosX = robotInfo[0];
         int robotPosY = robotInfo[1];
@@ -206,7 +196,7 @@ public class showUI extends JFrame {
     }
     private void run(SIM sim, Map realMap, AddOn addOn, Robot robot) {
         //addOn.planPath();
-        timer = new Timer(250, new ActionListener() {
+        timer = new Timer(500, new ActionListener() {
             int count = 0;
             @Override
             public void actionPerformed(ActionEvent e) {

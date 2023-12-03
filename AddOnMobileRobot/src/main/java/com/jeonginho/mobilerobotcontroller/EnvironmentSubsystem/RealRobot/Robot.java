@@ -20,9 +20,6 @@ public class Robot {
         Random random = new Random();
         double probability = random.nextDouble();
         int distance = (probability <= 0.1) ? 2 : 1;
-        if(distance==2){
-            System.out.println("=============================error occured!==========");
-        }
         this.x += DIRECTIONS[direction][0] * distance;
         this.y += DIRECTIONS[direction][1] * distance;
 
@@ -31,7 +28,6 @@ public class Robot {
         if(this.x < 0) this.x = 0;
         if(this.x > realMap.getMap()[0].length-1) this.x = realMap.getMap()[0].length-1;
         if(distance == 2 & realMap.getSpotType(x,y)=='H'){
-            System.out.println("I'm at ["+x+", "+y+"]. I moved twice, but there's hazard. Cancle move.");
             this.x += DIRECTIONS[(direction+2)%4][0];
             this.y += DIRECTIONS[(direction+2)%4][1];
         }
@@ -40,8 +36,6 @@ public class Robot {
 
     public void rotate() {
         direction = (direction + 1) % 4;
-        System.out.println("Robot direction"+direction);
-
     }
     public void setPos(int x, int y, int direction){
         this.x = x;

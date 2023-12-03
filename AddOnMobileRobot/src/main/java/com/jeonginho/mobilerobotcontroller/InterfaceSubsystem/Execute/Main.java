@@ -69,11 +69,6 @@ public class Main {
                     String colorInputText = interfacE.getColorInputText();
                     String hazardInputText = interfacE.getHazardSpotText();
 
-                    mapSizeText = "(6 7)";
-                    startSpotText = "(5 1)";
-                    spotInputText = "((6 6)(0 5))";
-                    colorInputText = "((2 4)(4 5)(3 6))";
-                    hazardInputText = "((6 5)(5 3))";
 
                     int[] sizeOfMap;
                     int[] start;

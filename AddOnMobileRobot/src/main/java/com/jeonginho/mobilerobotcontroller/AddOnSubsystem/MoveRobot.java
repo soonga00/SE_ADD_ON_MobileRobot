@@ -23,17 +23,11 @@ public class MoveRobot {
     }
     protected boolean[] orderMovement(SIM sim,char[][] addOnMap, Robot addOnRobot, Robot realRobot, Map realMap, ArrayList<int[]> path) {
 
-        System.out.println("  orderMovement STart!");
         boolean[] rePathAndError= {false, false};
         int curX = addOnRobot.getPos()[0];
         int curY = addOnRobot.getPos()[1];
         int curDirection = addOnRobot.getPos()[2];
         if(path.size()>1) {
-            System.out.print("path = ");
-            for(int i = 0; i < path.size(); i++){
-                System.out.println("["+path.get(i)[0]+", "+path.get(i)[1]+"] =>");
-            }
-            System.out.println("\b\b");
             int nextX = path.get(1)[0];
             int nextY = path.get(1)[1];
             int remainedTurns = calTurns(curDirection, curX, curY, nextX, nextY);
@@ -50,7 +44,6 @@ public class MoveRobot {
             }else {
                 if (sim.isHazard(realRobot, realMap)) {
                     rePathAndError[0] = true;
-                    System.out.println("\b HAZARD!!!!!!");
                     addOnMap[nextY][nextX] = 'H';
                 } else {
                     sim.moveRobot(realRobot, realMap);
@@ -74,7 +67,6 @@ public class MoveRobot {
         }else{
             rePathAndError[0] = true;
         }
-        System.out.println("////////Repath : "+rePathAndError[0]+", posErrror : "+rePathAndError[1]);
         return rePathAndError;
     }
 }

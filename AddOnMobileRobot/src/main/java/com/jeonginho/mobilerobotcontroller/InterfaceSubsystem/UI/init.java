@@ -8,15 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class init extends JFrame {
-    private JLabel mapLabel;
     private JTextField mapSize;
-    private JLabel startLabel;
     private JTextField startSpot;
-    private JLabel spotLabel;
     private JTextField spotInput;
-    private JLabel colorLabel;
     private JTextField colorInput;
-    private JLabel hazardLabel;
     private JTextField hazardSpot;
     private JButton submitBtn;
     private String mapSizeText;
@@ -30,31 +25,31 @@ public class init extends JFrame {
         setLayout(new GridLayout(6, 2));
 
         // "Map" 부분
-        mapLabel = new JLabel("Map");
+        JLabel mapLabel = new JLabel("Map");
         add(mapLabel);
         mapSize = new JTextField();
         add(mapSize);
 
         // "Start" 부분
-        startLabel = new JLabel("Start");
+        JLabel startLabel = new JLabel("Start");
         add(startLabel);
         startSpot = new JTextField();
         add(startSpot);
 
         // "Spot" 부분
-        spotLabel = new JLabel("Spot");
+        JLabel spotLabel = new JLabel("Spot");
         add(spotLabel);
         spotInput = new JTextField();
         add(spotInput);
 
         // "Colorblob"
-        colorLabel = new JLabel("Color");
+        JLabel colorLabel = new JLabel("Color");
         add(colorLabel);
         colorInput = new JTextField();
         add(colorInput);
 
         // "Hazard" 부분
-        hazardLabel = new JLabel("Hazard");
+        JLabel hazardLabel = new JLabel("Hazard");
         add(hazardLabel);
         hazardSpot = new JTextField();
         add(hazardSpot);
@@ -66,10 +61,6 @@ public class init extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-//                 interfaceTest 클래스 실행
-//                SwingUtilities.invokeLater(() -> {
-//                    new interfaceTest(3, 4);
-//                });
             }
         });
 

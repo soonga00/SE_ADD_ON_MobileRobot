@@ -21,7 +21,7 @@ public class RecordAudio {
             line.open(format);
             line.start();
 
-            JOptionPane.showMessageDialog(null, "Start Recording... \n 녹음을 시작합니다.");
+            JOptionPane.showMessageDialog(null, "Start Recording...\n녹음을 시작합니다.");
 
             // 녹음할 시간 (초)
             int recordingTime = 5;
@@ -37,7 +37,7 @@ public class RecordAudio {
             }
 
             // 녹음 중지
-            JOptionPane.showMessageDialog(null, "Stop Recording... \n 녹음을 중지합니다.");
+            JOptionPane.showMessageDialog(null, "Recording is stopped...\n녹음이 끝났습니다.");
 
             // 자원 해제
             out.close();
@@ -47,7 +47,7 @@ public class RecordAudio {
             // 파일로 저장
             saveToFile(out.toByteArray());
 
-            JOptionPane.showMessageDialog(null, "Record file is Saved. \n 녹음 파일이 저장되었습니다.");
+            JOptionPane.showMessageDialog(null, "Record file is Saved.\n녹음 파일을 저장했습니다.\nPlease wait...\n잠시만 기다려 주세요...");
 
         } catch (LineUnavailableException | IOException e) {
             e.printStackTrace();

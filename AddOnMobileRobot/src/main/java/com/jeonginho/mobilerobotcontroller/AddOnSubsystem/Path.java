@@ -17,7 +17,6 @@ public class Path {
     }
 
     protected ArrayList<int[]> planPath(char[][] addOnMap, Robot addOnRobot) {
-        System.out.println("PlanPath STart!");
         predsNum = 0;
         this.addOnMap = addOnMap;
         this.dfsCnt = 0;
@@ -27,9 +26,7 @@ public class Path {
                 if (chars[j] == 'P') predsNum++;
             }
         }
-        System.out.println("preds Num : "+ predsNum);
         if (predsNum > 0) {
-            // Copy the addOnMap to avoid modifying the original addOnMap
             this.visitedMap = new int[this.addOnMap.length][this.addOnMap[0].length];
             for (int i = 0; i < addOnMap.length; i++) {
                 for (int j = 0; j < addOnMap[0].length; j++) {
@@ -38,7 +35,6 @@ public class Path {
             }
             int initX = addOnRobot.getPos()[0];
             int initY = addOnRobot.getPos()[1];
-            //System.out.println("@@ Initial Pos : ["+initX+", "+initY+"]");
             path.add(new int[]{initX, initY});
             visitedMap[initY][initX] = dfsCnt++;
             pathFound=false;
