@@ -1,21 +1,29 @@
-package com.jeonginho.mobilerobotcontroller.addon;
+package com.jeonginho.mobilerobotcontroller.InterfaceSubsystem.UI;
 
+
+import com.jeonginho.mobilerobotcontroller.AddOnSubsystem.AddOn;
+import com.jeonginho.mobilerobotcontroller.EnvironmentSubsystem.RealMap.Map;
+import com.jeonginho.mobilerobotcontroller.EnvironmentSubsystem.RealRobot.Robot;
+import com.jeonginho.mobilerobotcontroller.EnvironmentSubsystem.Simulator.SIM;
+import com.jeonginho.mobilerobotcontroller.InterfaceSubsystem.STT.Parsing;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
-public class interfaceTest extends JFrame {
-    private static final int LABEL_WIDTH = 100; // 레이블 너비
-    private static final int LABEL_HEIGHT = 100; // 레이블 높이
+public class showUI extends JFrame {
+    private static final int LABEL_WIDTH = 100;
+    private static final int LABEL_HEIGHT = 100;
     private JLabel[][] imageLabels;
     private ImageIcon colorImage;
     private ImageIcon hazardImage;
     private ImageIcon uncolorImage;
     private ImageIcon unhazardImage;
     private ImageIcon predefinedImage;
+    private ImageIcon passedPredefinedImage;
     private ImageIcon defaultImage;
     private ImageIcon pathImage;
     private ImageIcon rightImage;
@@ -26,7 +34,7 @@ public class interfaceTest extends JFrame {
     private JPanel buttonPanel;
     private Timer timer;
     private boolean isTimerRunning = false;
-    private voiceTest addSpot;
+    private Parsing addSpot;
     private List<Integer> newSpot;
 
     public void start(SIM sim, Robot robot, Map realMap, AddOn addOn) {
@@ -38,6 +46,7 @@ public class interfaceTest extends JFrame {
         unhazardImage = new ImageIcon("unhazard.png");
         uncolorImage = new ImageIcon("uncolorblob.png");
         predefinedImage = new ImageIcon("predefined.png");
+        passedPredefinedImage = new ImageIcon("passedPredefined.png");
         defaultImage = new ImageIcon("default.png");
         pathImage = new ImageIcon("path.png");
         rightImage = new ImageIcon("right.png");
@@ -45,7 +54,7 @@ public class interfaceTest extends JFrame {
         upImage = new ImageIcon("up.png");
         downImage = new ImageIcon("down.png");
 
-        this.addSpot = new voiceTest();
+        this.addSpot = new Parsing();
 
         int rows = realMap.getMap().length;
         int cols = realMap.getMap()[0].length;
@@ -130,9 +139,10 @@ public class interfaceTest extends JFrame {
 
                 if (realmap[x][y] == '.')
                     label = new JLabel(defaultImage);
-                if (addOn.path != null) {
-                    for (int k = 0; k < addOn.path.size(); k++) {
-                        if (y == addOn.path.get(k)[0] && x == addOn.path.get(k)[1]) {
+                if (!addOn.isPathEmpty()) {
+                    ArrayList<int[]> curPath = addOn.getPath();
+                    for (int k = 0; k < curPath.size(); k++) {
+                        if (y == curPath.get(k)[0] && x == curPath.get(k)[1]) {
                             label.setIcon(pathImage);
                             break;
                         }
@@ -148,8 +158,10 @@ public class interfaceTest extends JFrame {
                     if(robotDirection == 3)
                         addOverlay(label, leftImage);
                 }
-                if (realmap[x][y] == 'P')
+                if (realmap[x][y] == 'P' && addOnmap[x][y] != 'S')
                     addOverlay(label, predefinedImage);
+                if (addOnmap[x][y] == 'S')
+                    addOverlay(label, passedPredefinedImage);
                 if (realmap[x][y] == 'H' && addOnmap[x][y] != 'H')
                     addOverlay(label, unhazardImage);
                 if (realmap[x][y] == 'C'&& addOnmap[x][y] != 'C')
@@ -171,7 +183,7 @@ public class interfaceTest extends JFrame {
         add(tablePanel, BorderLayout.CENTER);
 
         // 하단에 버튼을 프레임에 추가
-        add(buttonPanel, BorderLayout.SOUTH);
+        add(buttonPanel, BorderLayout.EAST);
     }
     private void addOverlay(JLabel label, ImageIcon overlayIcon) {
         JLabel overlayLabel = new JLabel(overlayIcon);
@@ -193,18 +205,24 @@ public class interfaceTest extends JFrame {
         }
     }
     private void run(SIM sim, Map realMap, AddOn addOn, Robot robot) {
-        addOn.planPath();
-        timer = new Timer(500, new ActionListener() {
+        //addOn.planPath();
+        timer = new Timer(250, new ActionListener() {
             int count = 0;
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ((addOn.predsNum != 0) && count++ < 500) {
+                if ((!addOn.isVisitedAllPreds()) && count++ < 500) {
                     addOn.orderMovement(sim, robot, realMap);
-                    if (addOn.path.isEmpty()) {
-                        addOn.planPath();
-                        if (addOn.predsNum ==0)
-                            stopTimer();
+                    if(addOn.isErrorOccured()){
+                        stopTimer();
+                        // 메시지 다이얼로그 표시
+                        JOptionPane.showMessageDialog(null, "Error: Robot moved twice.");
+                        startTimer();
                     }
+                    if (addOn.isVisitedAllPreds()){
+                        stopTimer();
+                        JOptionPane.showMessageDialog(null, "Visited Every Predefined Spot");
+                    }
+
                     SwingUtilities.invokeLater(() -> {
                         initializeComponents(sim, realMap, addOn, robot);
                         addImageLabels(realMap, addOn, robot);
@@ -217,6 +235,7 @@ public class interfaceTest extends JFrame {
         });
         startTimer(); // 타이머 시작
     }
+
 }
 
 

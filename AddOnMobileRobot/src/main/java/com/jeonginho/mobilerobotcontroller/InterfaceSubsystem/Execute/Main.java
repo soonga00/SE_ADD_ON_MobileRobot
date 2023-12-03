@@ -1,4 +1,11 @@
-package com.jeonginho.mobilerobotcontroller.addon;
+package com.jeonginho.mobilerobotcontroller.InterfaceSubsystem.Execute;
+
+import com.jeonginho.mobilerobotcontroller.AddOnSubsystem.AddOn;
+import com.jeonginho.mobilerobotcontroller.EnvironmentSubsystem.RealMap.Map;
+import com.jeonginho.mobilerobotcontroller.EnvironmentSubsystem.RealRobot.Robot;
+import com.jeonginho.mobilerobotcontroller.EnvironmentSubsystem.Simulator.SIM;
+import com.jeonginho.mobilerobotcontroller.InterfaceSubsystem.UI.init;
+import com.jeonginho.mobilerobotcontroller.InterfaceSubsystem.UI.showUI;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -6,7 +13,7 @@ import javax.swing.*;
 
 public class Main {
     private static int[] convertToCoordinatesArray(String input) {
-        input = input.replaceAll("[\\(\\)]", ""); // 괄호 제거
+        input = input.replaceAll("[()]", ""); // 괄호 제거
         String[] parts = input.split("\\s+"); // 공백을 기준으로 분리
 
         int[] coordinates = new int[parts.length];
@@ -44,7 +51,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        initMap interfacE = new initMap();
+        init interfacE = new init();
         JButton submitButton = interfacE.getSubmitBtn();
         if (submitButton != null) {
             // 가져온 버튼이 null이 아닌 경우, ActionListener 등록 또는 기타 동작 수행
@@ -62,11 +69,11 @@ public class Main {
                     String colorInputText = interfacE.getColorInputText();
                     String hazardInputText = interfacE.getHazardSpotText();
 
-                    mapSizeText = "(4 5)";
-                    startSpotText = "(1 2)";
-                    spotInputText = "((4 2)(1 5)(0 0)";
-                    colorInputText = "((0 2)(2 2)(4 4))";
-                    hazardInputText = "((1 0)(3 2))";
+                    mapSizeText = "(6 7)";
+                    startSpotText = "(5 1)";
+                    spotInputText = "((6 6)(0 5))";
+                    colorInputText = "((2 4)(4 5)(3 6))";
+                    hazardInputText = "((6 5)(5 3))";
 
                     int[] sizeOfMap;
                     int[] start;
@@ -81,15 +88,16 @@ public class Main {
                     hazard = convertToCoordinates2DArray(hazardInputText);
 
                     SIM sim = new SIM();
-//                    Robot realRobot = new Robot(start[0], start[1]);
+                    assert start != null;
+                    Robot realRobot = new Robot(start[0], start[1]);
                     assert sizeOfMap != null;
                     Map realMap = new Map(sizeOfMap[0], sizeOfMap[1], predefined, hazard, color);
                     AddOn addOn = new AddOn(realMap.getInitialMap(), start, predefined);
 
                     SwingUtilities.invokeLater(() -> {
 //                        interfaceTest userInterface = new interfaceTest(sim, addOn.addOnRobot, realMap, addOn);
-                        interfaceTest userInterface = new interfaceTest();
-                        userInterface.start(sim, addOn.addOnRobot, realMap, addOn);
+                        showUI userInterface = new showUI();
+                        userInterface.start(sim, realRobot, realMap, addOn);
 
                     });
                 }

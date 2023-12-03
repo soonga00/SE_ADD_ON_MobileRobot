@@ -1,21 +1,16 @@
-package com.jeonginho.mobilerobotcontroller.addon;
+package com.jeonginho.mobilerobotcontroller.InterfaceSubsystem.STT;
 
 import javax.sound.sampled.AudioFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
 
-public class voiceTest {
+public class Parsing {
     private List<Integer> posSpot;
     public static String[] inputStr(String input) {
-
         // 공백을 기준으로 문자열 분리
-        String[] parts = input.split("[\\s\\.]");
-
-        return parts;
+        return input.split("[\\s.]");
         // 분리된 각 부분 출력
     }
     public List<Integer> getSpotPos() { return posSpot; }
@@ -59,7 +54,7 @@ public class voiceTest {
         RecordAudio record = new RecordAudio(format);
         record.startRecording();
 
-        VoiceInput voiceRec = new VoiceInput();
+        SpeechToText voiceRec = new SpeechToText();
         String recognized = voiceRec.getRecognizedText();
         String[] arr = inputStr(recognized);
         posSpot = new ArrayList<Integer>();

@@ -1,4 +1,4 @@
-package com.jeonginho.mobilerobotcontroller.addon;
+package com.jeonginho.mobilerobotcontroller.InterfaceSubsystem.STT;
 
 import javax.swing.*;
 import javax.sound.sampled.*;
@@ -21,7 +21,7 @@ public class RecordAudio {
             line.open(format);
             line.start();
 
-            JOptionPane.showMessageDialog(null, "녹음을 시작합니다.");
+            JOptionPane.showMessageDialog(null, "Start Recording... \n 녹음을 시작합니다.");
 
             // 녹음할 시간 (초)
             int recordingTime = 5;
@@ -37,7 +37,7 @@ public class RecordAudio {
             }
 
             // 녹음 중지
-            JOptionPane.showMessageDialog(null, "녹음을 중지합니다.");
+            JOptionPane.showMessageDialog(null, "Stop Recording... \n 녹음을 중지합니다.");
 
             // 자원 해제
             out.close();
@@ -47,7 +47,7 @@ public class RecordAudio {
             // 파일로 저장
             saveToFile(out.toByteArray());
 
-            JOptionPane.showMessageDialog(null, "녹음 파일이 저장되었습니다.");
+            JOptionPane.showMessageDialog(null, "Record file is Saved. \n 녹음 파일이 저장되었습니다.");
 
         } catch (LineUnavailableException | IOException e) {
             e.printStackTrace();
@@ -56,8 +56,8 @@ public class RecordAudio {
 
     private void saveToFile(byte[] audioData) {
         try {
-            // 파일로 저장
-            File outputFile = new File("/Users/kkdh15/Desktop/dh/UOS/SE/records/recorded.wav");
+
+            File outputFile = new File("records/recorded.wav");
             AudioFormat audioFormat = line.getFormat();
             AudioInputStream audioInputStream = new AudioInputStream(new ByteArrayInputStream(audioData), audioFormat, audioData.length);
             AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, outputFile);
@@ -67,14 +67,5 @@ public class RecordAudio {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-
-    public static void main(String[] args) {
-        // 녹음할 오디오 포맷 설정
-        AudioFormat format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 16000, 16, 1, 2, 16000, false);
-
-        RecordAudio recorder = new RecordAudio(format);
-        recorder.startRecording();
     }
 }

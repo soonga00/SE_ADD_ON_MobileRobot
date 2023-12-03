@@ -1,4 +1,7 @@
-package com.jeonginho.mobilerobotcontroller.addon;
+package com.jeonginho.mobilerobotcontroller.EnvironmentSubsystem.Simulator;
+
+import com.jeonginho.mobilerobotcontroller.EnvironmentSubsystem.RealMap.Map;
+import com.jeonginho.mobilerobotcontroller.EnvironmentSubsystem.RealRobot.Robot;
 
 public class SIM {
     public void rotateRobot(Robot robot) {

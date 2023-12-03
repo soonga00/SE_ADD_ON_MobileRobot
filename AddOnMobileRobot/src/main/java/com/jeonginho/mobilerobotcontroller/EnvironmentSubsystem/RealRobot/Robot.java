@@ -1,11 +1,13 @@
-package com.jeonginho.mobilerobotcontroller.addon;
+package com.jeonginho.mobilerobotcontroller.EnvironmentSubsystem.RealRobot;
+
+import com.jeonginho.mobilerobotcontroller.EnvironmentSubsystem.RealMap.Map;
 
 import java.util.Random;
 
 public class Robot {
+    public static final int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     private int x;
     private int y;
-    public static final int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     private int direction;
 
     public Robot(int initialX, int initialY) {
@@ -29,6 +31,7 @@ public class Robot {
         if(this.x < 0) this.x = 0;
         if(this.x > realMap.getMap()[0].length-1) this.x = realMap.getMap()[0].length-1;
         if(distance == 2 & realMap.getSpotType(x,y)=='H'){
+            System.out.println("I'm at ["+x+", "+y+"]. I moved twice, but there's hazard. Cancle move.");
             this.x += DIRECTIONS[(direction+2)%4][0];
             this.y += DIRECTIONS[(direction+2)%4][1];
         }

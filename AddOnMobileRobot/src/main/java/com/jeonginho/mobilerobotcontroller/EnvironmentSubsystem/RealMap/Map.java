@@ -1,4 +1,4 @@
-package com.jeonginho.mobilerobotcontroller.addon;
+package com.jeonginho.mobilerobotcontroller.EnvironmentSubsystem.RealMap;
 
 public class Map {
     private final int xSize;

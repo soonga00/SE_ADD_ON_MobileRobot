@@ -1,4 +1,4 @@
-package com.jeonginho.mobilerobotcontroller.addon;
+package com.jeonginho.mobilerobotcontroller.InterfaceSubsystem.UI;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class initMap extends JFrame {
+public class init extends JFrame {
     private JLabel mapLabel;
     private JTextField mapSize;
     private JLabel startLabel;
@@ -24,7 +24,7 @@ public class initMap extends JFrame {
     private String spotInputText;
     private String colorInputText;
     private String hazardSpotText;
-    public initMap() {
+    public init() {
         setTitle("Map Input");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(6, 2));
@@ -110,10 +110,5 @@ public class initMap extends JFrame {
         return submitBtn;
     }
 
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            new initMap();
-//        });
-//    }
 }
 
