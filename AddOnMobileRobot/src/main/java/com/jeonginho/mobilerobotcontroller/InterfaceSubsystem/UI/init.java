@@ -42,7 +42,7 @@ public class init extends JFrame {
         spotInput = new JTextField();
         add(spotInput);
 
-        // "Colorblob"
+        // "Colorblob" 부분
         JLabel colorLabel = new JLabel("Color");
         add(colorLabel);
         colorInput = new JTextField();

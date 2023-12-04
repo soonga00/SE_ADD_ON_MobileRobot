@@ -37,13 +37,10 @@ public class showUI extends JFrame {
 
         imageLabels = new JLabel[rows][cols];
 
-        // GUI 컴포넌트 초기화
         initializeComponents(sim, realMap, addOn, robot);
 
-        // 2차원 배열에 이미지 레이블 추가
         addImageLabels(realMap, addOn, robot);
 
-        // 프레임의 크기를 이미지 테이블의 크기에 맞게 조절
         pack();
 
         // 프레임 표시
@@ -64,7 +61,6 @@ public class showUI extends JFrame {
                 run(sim, realMap, addOn, robot); // voiceRecog 함수 실행
             }
         });
-        // AddSpot 버튼 클릭 이벤트 처리
         addSpotButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -96,7 +92,6 @@ public class showUI extends JFrame {
                 }
             }
         });
-        // 상단에 표를 표시할 패널 생성
         tablePanel = new JPanel(new GridLayout(imageLabels.length, imageLabels[0].length));
     }
 
@@ -163,16 +158,13 @@ public class showUI extends JFrame {
 
 
 
-                label.setHorizontalAlignment(SwingConstants.CENTER); // 이미지 중앙 정렬
+                label.setHorizontalAlignment(SwingConstants.CENTER);
                 imageLabels[x][y] = label;
-                tablePanel.add(imageLabels[x][y]); // 레이블을 패널에 추가
+                tablePanel.add(imageLabels[x][y]);
             }
         }
 
-        // 상단에 표를 표시할 패널을 프레임에 추가
         add(tablePanel, BorderLayout.CENTER);
-
-        // 하단에 버튼을 프레임에 추가
         add(buttonPanel, BorderLayout.EAST);
     }
     private void addOverlay(JLabel label, ImageIcon overlayIcon) {
@@ -180,22 +172,20 @@ public class showUI extends JFrame {
         overlayLabel.setBounds(0, 0, LABEL_WIDTH, LABEL_HEIGHT);
         label.add(overlayLabel, JLayeredPane.PALETTE_LAYER);
     }
-    // 타이머 시작
     private void startTimer() {
-        if (!isTimerRunning) { // 타이머가 이미 실행 중이 아니라면 시작
+        if (!isTimerRunning) {
             timer.start();
-            isTimerRunning = true; // 타이머 동작 중임을 표시
+            isTimerRunning = true;
         }
     }
     // 타이머 중지
     private void stopTimer() {
-        if (isTimerRunning) { // 타이머가 동작 중이라면 중지
+        if (isTimerRunning) {
             timer.stop();
-            isTimerRunning = false; // 타이머 동작 중이 아님을 표시
+            isTimerRunning = false;
         }
     }
     private void run(SIM sim, Map realMap, AddOn addOn, Robot robot) {
-        //addOn.planPath();
         timer = new Timer(500, new ActionListener() {
             int count = 0;
             @Override
@@ -204,7 +194,6 @@ public class showUI extends JFrame {
                     addOn.orderMovement(sim, robot, realMap);
                     if(addOn.isErrorOccured()){
                         stopTimer();
-                        // 메시지 다이얼로그 표시
                         JOptionPane.showMessageDialog(null, "Error: Robot moved twice.");
                         startTimer();
                     }
@@ -219,11 +208,11 @@ public class showUI extends JFrame {
                         revalidate();
                     });
                 } else {
-                    stopTimer(); // 타이머 중지
+                    stopTimer();
                 }
             }
         });
-        startTimer(); // 타이머 시작
+        startTimer();
     }
 
 }

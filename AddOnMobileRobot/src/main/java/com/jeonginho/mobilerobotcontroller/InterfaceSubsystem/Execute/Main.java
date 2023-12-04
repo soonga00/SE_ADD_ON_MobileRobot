@@ -13,8 +13,8 @@ import javax.swing.*;
 
 public class Main {
     private static int[] convertToCoordinatesArray(String input) {
-        input = input.replaceAll("[()]", ""); // 괄호 제거
-        String[] parts = input.split("\\s+"); // 공백을 기준으로 분리
+        input = input.replaceAll("[()]", "");
+        String[] parts = input.split("\\s+");
 
         int[] coordinates = new int[parts.length];
         try {
@@ -23,17 +23,16 @@ public class Main {
             }
             return coordinates;
         } catch (NumberFormatException | NullPointerException e) {
-            // 숫자로 변환할 수 없거나 null인 경우, 유효하지 않은 입력으로 간주
             return null;
         }
     }
     private static int[][] convertToCoordinates2DArray(String input) {
-        String[] coordinatePairs = input.split("\\)\\("); // 괄호 사이의 쌍을 분리
+        String[] coordinatePairs = input.split("\\)\\(");
         int[][] result = new int[coordinatePairs.length][];
 
         for (int i = 0; i < coordinatePairs.length; i++) {
-            String pair = coordinatePairs[i].replaceAll("[()]", ""); // 괄호 제거
-            String[] coordinates = pair.split("\\s+"); // 공백을 기준으로 좌표 분리
+            String pair = coordinatePairs[i].replaceAll("[()]", "");
+            String[] coordinates = pair.split("\\s+");
 
             result[i] = new int[coordinates.length];
             try {
@@ -41,7 +40,6 @@ public class Main {
                     result[i][j] = Integer.parseInt(coordinates[j]);
                 }
             } catch (NumberFormatException | NullPointerException e) {
-                // 숫자로 변환할 수 없거나 null인 경우, 유효하지 않은 입력으로 간주하고 해당 배열을 null로 설정
                 return null;
             }
         }
@@ -54,7 +52,6 @@ public class Main {
         init interfacE = new init();
         JButton submitButton = interfacE.getSubmitBtn();
         if (submitButton != null) {
-            // 가져온 버튼이 null이 아닌 경우, ActionListener 등록 또는 기타 동작 수행
             submitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -90,7 +87,6 @@ public class Main {
                     AddOn addOn = new AddOn(realMap.getInitialMap(), start, predefined);
 
                     SwingUtilities.invokeLater(() -> {
-//                        interfaceTest userInterface = new interfaceTest(sim, addOn.addOnRobot, realMap, addOn);
                         showUI userInterface = new showUI();
                         userInterface.start(sim, realRobot, realMap, addOn);
 

@@ -9,15 +9,12 @@ import java.util.ArrayList;
 public class Parsing {
     private List<Integer> posSpot;
     private static String[] inputStr(String input) {
-        // 공백을 기준으로 문자열 분리
         return input.split("[\\s.]");
-        // 분리된 각 부분 출력
     }
     public List<Integer> getSpotPos() { return posSpot; }
     public void addSpot() {
         Map<String, Integer> numdic = new HashMap<>();
 
-        // 숫자 딕셔너리에 데이터 추가
         numdic.put("일", 1);
         numdic.put("이", 2);
         numdic.put("삼", 3);
